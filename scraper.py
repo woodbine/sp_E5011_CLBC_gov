@@ -7,8 +7,8 @@ from bs4 import BeautifulSoup
 
 # Set up variables
 entity_id = "E5011_CLBC_gov"
-baseUrl = "http://www.camden.gov.uk/ccm/content/council-and-democracy/publications-and-finances/payments-to-suppliers/payments-to-suppliers.en?"
-url = baseUrl + "page=1"
+baseUrl = "http://www.camden.gov.uk/ccm/content/council-and-democracy/publications-and-finances/payments-to-suppliers/payments-to-suppliers.en"
+url = baseUrl + "?page=1"
 
 # Set up functions
 def convert_mth_strings ( mth_string ):
