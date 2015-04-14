@@ -51,6 +51,7 @@ for yrPage in yrPages:
 	  		title = fileLink.contents[0].strip().upper()
 	  		if 'CSV' in title:
 	  			title = title.replace('\n','')
+	  			title = title.replace('                    ','')
 		  		title = title.replace(' SUPPLIER DATA (CSV)','')
 				csvYr = title.split(' ')[-1]
 				csvMth = title.split(' ')[-2][:3]
