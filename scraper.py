@@ -44,6 +44,7 @@ for yrPage in yrPages:
 	  	
 	  	mainBlock = soup2.find('div',{'class':'main'})
 	  	fileLinks = mainBlock.findAll('a')
+	  	print fileLinks
 	  	
 	  	for fileLink in fileLinks:
 	  		fileUrl = fileLink['href']
