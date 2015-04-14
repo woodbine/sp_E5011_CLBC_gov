@@ -54,6 +54,7 @@ for yrPage in yrPages:
 				csvYr = title.split(' ')[-1]
 				csvMth = title.split(' ')[-2][:3]
 				csvMth = convert_mth_strings(csvMth);
+				print title
 				print "csvYr: " + csvYr
 				print "csvMth: " + csvMth
 				
