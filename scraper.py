@@ -31,7 +31,7 @@ for yrPage in yrPages:
 	yrLink = yrPage.a['href']
 	
 	if 'page=1' in yrLink:
-	  print 'no data on this page'
+		print 'no data on this page'
 	else:
   		# add the right prefix onto the url
 	  	yrUrl = 'http://www.camden.gov.uk/ccm/content/council-and-democracy/publications-and-finances/payments-to-suppliers/payments-to-suppliers.en?' + link
@@ -48,18 +48,18 @@ for yrPage in yrPages:
 	  		
 	  		title = fileLink.a.contents[0]
 				# create the right strings for the new filename
-				title = title.upper().strip()
-				csvYr = title.split(' ')[-1]
-				csvYr = csvYr.replace("200","20")
-				
-				csvMth = title.split(' ')[-2][:3]
-				csvMth = convert_mth_strings(csvMth);
+			title = title.upper().strip()
+			csvYr = title.split(' ')[-1]
+			csvYr = csvYr.replace("200","20")
 			
-				filename = entity_id + "_" + csvYr + "_" + csvMth
+			csvMth = title.split(' ')[-2][:3]
+			csvMth = convert_mth_strings(csvMth);
+		
+			filename = entity_id + "_" + csvYr + "_" + csvMth
+		
+			todays_date = str(datetime.now())
+		
+			scraperwiki.sqlite.save(unique_keys=['l'], data={"l": fileUrl, "f": filename, "d": todays_date })
 			
-				todays_date = str(datetime.now())
-			
-				scraperwiki.sqlite.save(unique_keys=['l'], data={"l": fileUrl, "f": filename, "d": todays_date })
-				
-				print filename
+			print filename
 
