@@ -30,6 +30,9 @@ for yrPage in yrPages:
 
 	yrLink = yrPage.a['href']
 	
+	print yrLink
+	
+	'''
 	if 'page=1' in yrLink:
 		print 'no data on this page'
 	else:
@@ -63,3 +66,4 @@ for yrPage in yrPages:
 			
 			print filename
 
+		'''
