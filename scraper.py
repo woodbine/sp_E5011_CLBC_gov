@@ -34,7 +34,7 @@ for yrPage in yrPages:
 		print 'no data on this page'
 	else:
   		# add the right prefix onto the url
-	  	yrUrl = 'http://www.camden.gov.uk/ccm/content/council-and-democracy/publications-and-finances/payments-to-suppliers/payments-to-suppliers.en?' + link
+	  	yrUrl = 'http://www.camden.gov.uk/ccm/content/council-and-democracy/publications-and-finances/payments-to-suppliers/payments-to-suppliers.en?' + yrLink
 	  	
 	  	html2 = urllib2.urlopen(yrUrl)
 	  	soup2 = BeautifulSoup(html2)
