@@ -24,13 +24,14 @@ soup = BeautifulSoup(html)
 
 # find all entries with the required class
 olist = soup.find('ol')
+print olist
 yrPages = olist.findAll('li')
 
 for yrPage in yrPages:
 
 	yrLink = yrPage.a['href']
 	
-	print yrLink
+	# print yrLink
 	
 	'''
 	if 'page=1' in yrLink:
