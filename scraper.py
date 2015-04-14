@@ -57,14 +57,14 @@ for yrPage in yrPages:
 				print "csvYr: " + csvYr
 				print "csvMth: " + csvMth
 				
+				
+				filename = entity_id + "_" + csvYr + "_" + csvMth
 			
-			filename = entity_id + "_" + csvYr + "_" + csvMth
-		
-			todays_date = str(datetime.now())
-		
-			# scraperwiki.sqlite.save(unique_keys=['l'], data={"l": fileUrl, "f": filename, "d": todays_date })
+				todays_date = str(datetime.now())
 			
-			print filename
-			
-			
-			
+				# scraperwiki.sqlite.save(unique_keys=['l'], data={"l": fileUrl, "f": filename, "d": todays_date })
+				
+				print filename
+				
+				
+				
