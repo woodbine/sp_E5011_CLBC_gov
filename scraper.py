@@ -48,14 +48,15 @@ for yrPage in yrPages:
 	  	for fileLink in fileLinks:
 	  		fileUrl = fileLink['href']
 	  		fileUrl = fileUrl.replace("/redirect","http://www.camden.gov.uk/redirect")
-	  		
 	  		title = fileLink.contents[0].strip().upper()
-			csvYr = title.split(' ')[-4]
-			csvMth = title.split(' ')[-5][:3]
-			csvMth = convert_mth_strings(csvMth);
-			print "csvYr: " + csvYr
-			print "csvMth: " + csvMth
-			
+	  		if 'CSV' in title:
+		  		title = title.replace(' SUPPLIER DATA (CSV)','')
+				csvYr = title.split(' ')[-4]
+				csvMth = title.split(' ')[-5][:3]
+				csvMth = convert_mth_strings(csvMth);
+				print "csvYr: " + csvYr
+				print "csvMth: " + csvMth
+				
 			'''
 			filename = entity_id + "_" + csvYr + "_" + csvMth
 		
