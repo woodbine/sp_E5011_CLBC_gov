@@ -39,13 +39,9 @@ for yrPage in yrPages:
 	else:
   		# add the right prefix onto the url
 	  	yrUrl = baseUrl + yrLink
-	  	print yrUrl
-	  	
 	  	html2 = urllib2.urlopen(yrUrl)
 	  	soup2 = BeautifulSoup(html2)
-	  	
 	  	mainBlock = soup2.find('div',{'class':'main'})
-	  	print mainBlock
 	  	
 	  	fileLinks = mainBlock.findAll('a')
 	  	
@@ -54,6 +50,9 @@ for yrPage in yrPages:
 	  		fileUrl = fileUrl.replace("/redirect","http://www.camden.gov.uk/redirect")
 	  		
 	  		title = fileLink.contents[0]
+	  		print "title" + title
+	  		
+	  		'''
 			
 				# create the right strings for the new filename
 			title = title.upper().strip()
@@ -68,5 +67,6 @@ for yrPage in yrPages:
 			scraperwiki.sqlite.save(unique_keys=['l'], data={"l": fileUrl, "f": filename, "d": todays_date })
 			
 			print filename
-
-		
+			
+			'''
+			
