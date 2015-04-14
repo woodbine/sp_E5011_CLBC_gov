@@ -33,33 +33,33 @@ for yrPage in yrPages:
 	if 'page=1' in yrLink:
 	  print 'no data on this page'
 	else:
-  	# add the right prefix onto the url
-  	yrUrl = 'http://www.camden.gov.uk/ccm/content/council-and-democracy/publications-and-finances/payments-to-suppliers/payments-to-suppliers.en?' + link
-  	
-  	html2 = urllib2.urlopen(yrUrl)
-  	soup2 = BeautifulSoup(html2)
-  	
-  	mainBlock = soup2.find('div',{'class':'main'})
-  	fileLinks = mainBlock.findAll('a')
-  	
-  	for fileLink in fileLinks:
-  		fileUrl = fileLink['href']
-  		fileUrl = fileUrl.replace("/redirect","http://www.camden.gov.uk/redirect")
-  		
-  		title = fileLink.a.contents[0]
-			# create the right strings for the new filename
-			title = title.upper().strip()
-			csvYr = title.split(' ')[-1]
-			csvYr = csvYr.replace("200","20")
+  		# add the right prefix onto the url
+	  	yrUrl = 'http://www.camden.gov.uk/ccm/content/council-and-democracy/publications-and-finances/payments-to-suppliers/payments-to-suppliers.en?' + link
+	  	
+	  	html2 = urllib2.urlopen(yrUrl)
+	  	soup2 = BeautifulSoup(html2)
+	  	
+	  	mainBlock = soup2.find('div',{'class':'main'})
+	  	fileLinks = mainBlock.findAll('a')
+	  	
+	  	for fileLink in fileLinks:
+	  		fileUrl = fileLink['href']
+	  		fileUrl = fileUrl.replace("/redirect","http://www.camden.gov.uk/redirect")
+	  		
+	  		title = fileLink.a.contents[0]
+				# create the right strings for the new filename
+				title = title.upper().strip()
+				csvYr = title.split(' ')[-1]
+				csvYr = csvYr.replace("200","20")
+				
+				csvMth = title.split(' ')[-2][:3]
+				csvMth = convert_mth_strings(csvMth);
 			
-			csvMth = title.split(' ')[-2][:3]
-			csvMth = convert_mth_strings(csvMth);
-		
-			filename = entity_id + "_" + csvYr + "_" + csvMth
-		
-			todays_date = str(datetime.now())
-		
-			scraperwiki.sqlite.save(unique_keys=['l'], data={"l": fileUrl, "f": filename, "d": todays_date })
+				filename = entity_id + "_" + csvYr + "_" + csvMth
 			
-			print filename
+				todays_date = str(datetime.now())
+			
+				scraperwiki.sqlite.save(unique_keys=['l'], data={"l": fileUrl, "f": filename, "d": todays_date })
+				
+				print filename
 
