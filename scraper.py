@@ -49,17 +49,14 @@ for yrPage in yrPages:
 	  		fileUrl = fileLink['href']
 	  		fileUrl = fileUrl.replace("/redirect","http://www.camden.gov.uk/redirect")
 	  		
-	  		title = fileLink.contents[0].strip()
-	  		print "title" + title
-	  		
-	  		'''
-			
-				# create the right strings for the new filename
-			title = title.upper().strip()
+	  		title = fileLink.contents[0].strip().upper()
 			csvYr = title.split(' ')[-4]
 			csvMth = title.split(' ')[-5][:3]
 			csvMth = convert_mth_strings(csvMth);
-		
+			print "csvYr: " + csvYr
+			print "csvMth: " + csvMth
+			
+			'''
 			filename = entity_id + "_" + csvYr + "_" + csvMth
 		
 			todays_date = str(datetime.now())
@@ -67,6 +64,6 @@ for yrPage in yrPages:
 			scraperwiki.sqlite.save(unique_keys=['l'], data={"l": fileUrl, "f": filename, "d": todays_date })
 			
 			print filename
-			
 			'''
+			
 			
