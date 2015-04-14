@@ -23,8 +23,7 @@ html = urllib2.urlopen(url)
 soup = BeautifulSoup(html)
 
 # find all entries with the required class
-olist = soup.find('ol')
-print olist
+olist = soup.find('div', {'class':'mpa-sections visible-md-block visible-lg-block'})
 yrPages = olist.findAll('li')
 
 for yrPage in yrPages:
@@ -33,7 +32,7 @@ for yrPage in yrPages:
 	
 	# print yrLink
 	
-	'''
+	
 	if 'page=1' in yrLink:
 		print 'no data on this page'
 	else:
@@ -67,4 +66,4 @@ for yrPage in yrPages:
 			
 			print filename
 
-		'''
+		
