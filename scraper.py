@@ -49,7 +49,7 @@ for yrPage in yrPages:
 	  		fileUrl = fileLink['href']
 	  		fileUrl = fileUrl.replace("/redirect","http://www.camden.gov.uk/redirect")
 	  		
-	  		title = fileLink.contents[0]
+	  		title = fileLink.contents[0].strip()
 	  		print "title" + title
 	  		
 	  		'''
