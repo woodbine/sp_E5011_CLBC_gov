@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 
 # Set up variables
 entity_id = "E5011_CLBC_gov"
-baseurl = "http://www.camden.gov.uk/ccm/content/council-and-democracy/publications-and-finances/payments-to-suppliers/payments-to-suppliers.en?"
+baseUrl = "http://www.camden.gov.uk/ccm/content/council-and-democracy/publications-and-finances/payments-to-suppliers/payments-to-suppliers.en?"
 url = baseurl + "page=1"
 
 # Set up functions
