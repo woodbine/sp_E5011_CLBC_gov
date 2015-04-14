@@ -51,8 +51,8 @@ for yrPage in yrPages:
 	  		title = fileLink.contents[0].strip().upper()
 	  		if 'CSV' in title:
 		  		title = title.replace(' SUPPLIER DATA (CSV)','')
-				csvYr = title.split(' ')[-4]
-				csvMth = title.split(' ')[-5][:3]
+				csvYr = title.split(' ')[-1]
+				csvMth = title.split(' ')[-2][:3]
 				csvMth = convert_mth_strings(csvMth);
 				print "csvYr: " + csvYr
 				print "csvMth: " + csvMth
