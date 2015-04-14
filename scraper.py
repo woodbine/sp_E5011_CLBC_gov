@@ -52,11 +52,10 @@ for yrPage in yrPages:
 	  		if 'CSV' in title:
 	  			title = title.replace('\n','')
 	  			title = title.replace('                    ','')
-		  		title = title.replace(' SUPPLIER DATA (CSV)','')
-				csvYr = title.split(' ')[-1]
-				csvMth = title.split(' ')[-2][:3]
+	  			titleList = title.split()
+		  		csvYr = titleList[:1]
+				csvMth = titleList[:2][:3]
 				csvMth = convert_mth_strings(csvMth);
-				print title
 				print "csvYr: " + csvYr
 				print "csvMth: " + csvMth
 				
