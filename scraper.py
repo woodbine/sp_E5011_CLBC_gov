@@ -46,7 +46,7 @@ for yrPage in yrPages:
 	  		fileUrl = fileLink['href']
 	  		fileUrl = fileUrl.replace("/redirect","http://www.camden.gov.uk/redirect")
 	  		
-	  		title = fileLink.a.contents[0]
+	  		title = fileLink.contents[0]
 				# create the right strings for the new filename
 			title = title.upper().strip()
 			csvYr = title.split(' ')[-1]
