@@ -50,7 +50,7 @@ for yrPage in yrPages:
 	  		fileUrl = fileUrl.replace("/redirect","http://www.camden.gov.uk/redirect")
 	  		title = fileLink.contents[0].strip().upper()
 	  		if 'CSV' in title:
-	  			title = title.join(title.splitlines())
+	  			title = title.replace('\n','')
 		  		title = title.replace(' SUPPLIER DATA (CSV)','')
 				csvYr = title.split(' ')[-1]
 				csvMth = title.split(' ')[-2][:3]
