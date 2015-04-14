@@ -52,10 +52,8 @@ for yrPage in yrPages:
 	  		title = fileLink.contents[0]
 				# create the right strings for the new filename
 			title = title.upper().strip()
-			csvYr = title.split(' ')[-1]
-			csvYr = csvYr.replace("200","20")
-			
-			csvMth = title.split(' ')[-2][:3]
+			csvYr = title.split(' ')[-4]
+			csvMth = title.split(' ')[-5][:3]
 			csvMth = convert_mth_strings(csvMth);
 		
 			filename = entity_id + "_" + csvYr + "_" + csvMth
