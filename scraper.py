@@ -9,7 +9,9 @@ import urllib2
 from datetime import datetime
 from bs4 import BeautifulSoup
 
-#### FUNCTIONS 1.0
+#### FUNCTIONS 1.2
+
+import requests    # import requests to validate urls
 
 def validateFilename(filename):
     filenameregex = '^[a-zA-Z0-9]+_[a-zA-Z0-9]+_[a-zA-Z0-9]+_[0-9][0-9][0-9][0-9]_[0-9QY][0-9]$'
@@ -37,12 +39,12 @@ def validateFilename(filename):
 
 def validateURL(url):
     try:
-        r = urllib2.urlopen(url)
+        r = requests.get(url, allow_redirects=True, timeout=20)
         count = 1
-        while r.getcode() == 500 and count < 4:
+        while r.status_code == 500 and count < 4:
             print ("Attempt {0} - Status code: {1}. Retrying.".format(count, r.status_code))
             count += 1
-            r = urllib2.urlopen(url)
+            r = requests.get(url, allow_redirects=True, timeout=20)
         sourceFilename = r.headers.get('Content-Disposition')
         if sourceFilename:
             ext = os.path.splitext(sourceFilename)[1].replace('"', '').replace(';', '').replace(' ', '')
@@ -50,7 +52,7 @@ def validateURL(url):
             ext = '.bin'
         else:
             ext = os.path.splitext(url)[1]
-        validURL = r.getcode() == 200
+        validURL = r.status_code == 200
         validFiletype = ext.lower() in ['.csv', '.xls', '.xlsx', '.bin']
         return validURL, validFiletype
     except:
@@ -138,10 +140,6 @@ for yrPage in yrPages:
                     fileUrl = fileUrl
                 title = fileLink.contents[0].strip().upper()
                 if 'CSV' in title:
-                    # print title
-                    # html3 = urllib2.urlopen(fileUrl)
-                    # soup3 = BeautifulSoup(html3, 'lxml')
-                    # fileUrl = 'http://www.camden.gov.uk'+soup3.find('article').find_all('a')[-1]['href']
                     title = title.replace('\n','')
                     title = title.replace('                    ','')
                     csvYr = title.split(' ')[1]
