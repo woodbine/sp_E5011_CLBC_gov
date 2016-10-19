@@ -39,7 +39,7 @@ def validateFilename(filename):
 
 def validateURL(url):
     try:
-        r = requests.get(url, allow_redirects=True, timeout=20)
+        r = requests.get(url, allow_redirects=True, timeout=60)
         count = 1
         while r.status_code == 500 and count < 4:
             print ("Attempt {0} - Status code: {1}. Retrying.".format(count, r.status_code))
@@ -106,7 +106,7 @@ yrPages = olist.findAll('li')
 for yrPage in yrPages:
 
     yrLink = yrPage.a['href']
-    if 'page=1' in yrLink:
+    if 'page=1' in yrLink or 'Open Data' in yrPage.a.text:
         pass
     else:
         yrUrl = baseUrl + yrLink
