@@ -9,9 +9,7 @@ import urllib2
 from datetime import datetime
 from bs4 import BeautifulSoup
 
-#### FUNCTIONS 1.2
-
-import requests    # import requests to validate urls
+#### FUNCTIONS 1.0
 
 def validateFilename(filename):
     filenameregex = '^[a-zA-Z0-9]+_[a-zA-Z0-9]+_[a-zA-Z0-9]+_[0-9][0-9][0-9][0-9]_[0-9QY][0-9]$'
@@ -39,12 +37,12 @@ def validateFilename(filename):
 
 def validateURL(url):
     try:
-        r = requests.get(url, allow_redirects=True, timeout=60)
+        r = urllib2.urlopen(url)
         count = 1
-        while r.status_code == 500 and count < 4:
+        while r.getcode() == 500 and count < 4:
             print ("Attempt {0} - Status code: {1}. Retrying.".format(count, r.status_code))
             count += 1
-            r = requests.get(url, allow_redirects=True, timeout=20)
+            r = urllib2.urlopen(url)
         sourceFilename = r.headers.get('Content-Disposition')
         if sourceFilename:
             ext = os.path.splitext(sourceFilename)[1].replace('"', '').replace(';', '').replace(' ', '')
@@ -52,7 +50,7 @@ def validateURL(url):
             ext = '.bin'
         else:
             ext = os.path.splitext(url)[1]
-        validURL = r.status_code == 200
+        validURL = r.getcode() == 200
         validFiletype = ext.lower() in ['.csv', '.xls', '.xlsx', '.bin']
         return validURL, validFiletype
     except:
@@ -87,8 +85,7 @@ def convert_mth_strings ( mth_string ):
 #### VARIABLES 1.0
 
 entity_id = "E5011_CLBC_gov"
-baseUrl = "http://www.camden.gov.uk/ccm/content/council-and-democracy/publications-and-finances/payments-to-suppliers/payments-to-suppliers.en"
-url = baseUrl + "?page=1"
+url = "https://opendata.camden.gov.uk/Finance/Spend-Over-500-GBP-Current-Year/xkb2-6atn"
 errors = 0
 data = []
 
@@ -100,52 +97,15 @@ soup = BeautifulSoup(html, 'lxml')
 
 #### SCRAPE DATA
 
-olist = soup.find('div', {'class':'mpa-sections visible-md-block visible-lg-block'})
-yrPages = olist.findAll('li')
-
-for yrPage in yrPages:
-
-    yrLink = yrPage.a['href']
-    if 'page=1' in yrLink or 'Open Data' in yrPage.a.text:
-        pass
-    else:
-        yrUrl = baseUrl + yrLink
-        html2 = urllib2.urlopen(yrUrl)
-        soup2 = BeautifulSoup(html2, 'lxml')
-        mainBlock = soup2.find('div',{'class':'main'})
-        fileLinks = mainBlock.findAll('a')
-        for fileLink in fileLinks:
-            fileUrl = fileLink['href']
-            if '/redirect' in fileUrl:
-                fileUrl = fileUrl.replace("/redirect","http://www.camden.gov.uk/redirect")
-                title = fileLink.contents[0].strip().upper()
-                if 'CSV' in title:
-                    html3 = urllib2.urlopen(fileUrl)
-                    soup3 = BeautifulSoup(html3, 'lxml')
-                    if 'http:' not in soup3.find('article').find_all('a')[-1]['href']:
-                        fileUrl = 'http://www.camden.gov.uk'+soup3.find('article').find_all('a')[-1]['href']
-                    else:
-                        fileUrl = soup3.find('article').find_all('a')[-1]['href']
-                    title = title.replace('\n','')
-                    title = title.replace('                    ','')
-                    csvYr = title.split(' ')[1]
-                    csvMth = title.split(' ')[0][:3]
-                    csvMth = convert_mth_strings(csvMth.upper())
-                    data.append([csvYr, csvMth, fileUrl])
-
-            else:
-                if 'http:' not in fileUrl:
-                    fileUrl = 'http://www.camden.gov.uk'+fileUrl
-                else:
-                    fileUrl = fileUrl
-                title = fileLink.contents[0].strip().upper()
-                if 'CSV' in title:
-                    title = title.replace('\n','')
-                    title = title.replace('                    ','')
-                    csvYr = title.split(' ')[1]
-                    csvMth = title.split(' ')[0][:3]
-                    csvMth = convert_mth_strings(csvMth.upper())
-                    data.append([csvYr, csvMth, fileUrl])
+title = soup.title.text.strip().split('|')[0].strip()
+csvYr = csvMth = ''
+if 'Current Year' in title:
+    csvMth = 'Y1'
+    csvYr = '2017'
+id_num = url.split('/')[-1]
+link = 'https://opendata.camden.gov.uk/api/views/{}/rows.csv?accessType=DOWNLOAD'.format(id_num)
+csvMth = convert_mth_strings(csvMth.upper())
+data.append([csvYr, csvMth, link])
 
 #### STORE DATA 1.0
 
@@ -165,5 +125,6 @@ for row in data:
 
 if errors > 0:
     raise Exception("%d errors occurred during scrape." % errors)
+
 
 #### EOF
